@@ -89,9 +89,9 @@ pytest cria/remove test_poupa_grana no servidor indicado por TEST_DATABASE_URL. 
 
 ## Publicação e integrações externas
 
-Existe Git próprio com commits locais e branches por etapa. O remoto público do Poupa Grana já está conectado; a plataforma está sendo enviada por PR e o resultado remoto do CI será registrado no relatório. Ainda não há deploy comprovado. O workflow GitHub Actions está pronto com Python 3.12, PostgreSQL e check lint-e-testes. Para publicar: criar/conectar repositório GitHub próprio, executar o CI e proteger main; em pedido próprio, configurar Railway, servidor WSGI, estáticos, proxy HTTPS, domínio, backups e Wait for CI. Não usar runserver em produção.
+Existe Git próprio com commits locais e branches por etapa. A plataforma está integrada à main após CI remoto verde, com PR e check lint-e-testes obrigatórios; o histórico e as evidências estão no relatório local. Ainda não há deploy comprovado. O workflow GitHub Actions está pronto com Python 3.12, PostgreSQL e check lint-e-testes. Para publicar: criar/conectar repositório GitHub próprio, executar o CI e proteger main; em pedido próprio, configurar Railway, servidor WSGI, estáticos, proxy HTTPS, domínio, backups e Wait for CI. Não usar runserver em produção.
 
-Configuração de produção exige SECRET_KEY forte, ALLOWED_HOSTS sem curingas e PostgreSQL com SSL explícito. A confiança em proxy só pode ser configurada após verificar o proxy da hospedagem. Gunicorn e WhiteNoise não estão instalados nesta etapa local. Não publicar esta configuração sem concluir essa preparação.
+Configuração de produção exige SECRET_KEY forte, ALLOWED_HOSTS sem curingas e PostgreSQL com SSL explícito. A confiança em proxy só pode ser configurada após verificar o proxy da hospedagem. A preparação de produção está em docs/railway.md: Dockerfile, Gunicorn/WhiteNoise e perfil Railway com validação de contexto. O deploy ainda depende da conexão com a plataforma e da configuração/verificação de banco, domínio, variáveis e backups.
 
 A API Power BI está testada localmente; o Desktop e o Power BI Service não foram conectados à conta do usuário. A atualização agendada depende de endereço HTTPS acessível, credenciais e teste no serviço. Não afirmar refresh on-line antes disso. O provedor de IA será habilitado em etapa própria, sem chaves no frontend.
 
@@ -105,3 +105,5 @@ A API Power BI está testada localmente; o Desktop e o Power BI Service não for
 - Actions verificadas: https://github.com/actions/checkout e https://github.com/actions/setup-python (v7).
 - Power BI: https://learn.microsoft.com/en-us/power-query/connectors/web/web
 - Railway: https://docs.railway.com/guides/django e https://docs.railway.com/deployments/github-autodeploys
+
+Preparação Railway: consulte [docs/railway.md](docs/railway.md). O CI também constrói a imagem de produção sem segredos de runtime.
