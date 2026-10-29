@@ -56,3 +56,13 @@ jobs:
         run: python -m pytest
       - name: Build production image without runtime secrets
         run: docker build -t poupa-grana:ci .
+      - name: Verify non-root runtime and static collection
+        run: |
+          test "$(docker run --rm poupa-grana:ci id -u)" = "10001"
+          docker run --rm \
+            -e DJANGO_SETTINGS_MODULE=config.settings.railway \
+            -e RAILWAY_PROJECT_ID=ci-context-only \
+            -e SECRET_KEY=ci-only-build-validation-secret-key-with-no-real-data-1234567890 \
+            -e 'DATABASE_URL=postgresql://ci:fictitious@unused.invalid/unused?sslmode=require' \
+            -e ALLOWED_HOSTS=finance.example.invalid \
+            poupa-grana:ci python manage.py collectstatic --noinput
