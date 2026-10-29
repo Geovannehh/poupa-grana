@@ -98,3 +98,9 @@ O proprietário autorizou continuar e tomar as decisões técnicas por ele. Isso
 ## Conexão GitHub confirmada
 
 A instalação/conexão GitHub foi confirmada. O repositório público poupa-grana está acessível e contém um README inicial. O remoto foi conectado e seu commit inicial foi preservado como base da branch de entrega. Os commits locais anteriores continuam preservados em suas branches. A publicação seguirá por PR, sem enviar bancos, segredos ou runtime. Railway permanece pendente de conexão.
+
+## Publicação do código e preparação de produção
+
+PR #1 criado e integrado com merge commit após CI remoto verde, mesmo head verificado e proteção da main ativada. Main exige PR e check lint-e-testes, inclusive para administradores; force push e exclusão bloqueados. Histórico local inicial preservado em branch de arquivo.
+
+Preparação Railway separada: Dockerfile não root, Gunicorn 25.3.0, WhiteNoise 6.12.0, perfil de proxy específico da Railway, healthcheck mínimo, coleta de estáticos no runtime e inicialização do proprietário por variáveis privadas sob lock transacional PostgreSQL. Novos testes elevaram a suíte local para 75 aprovados; imagem será construída no CI Linux. Não foi gerado railway.json/toml porque a documentação vigente o marcou como obsoleto para serviços novos. Railway continua sem instalação/conexão confirmada, sem projeto ou deploy criado.
