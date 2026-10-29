@@ -1,0 +1,35 @@
+# Ambiente e segredos
+.env
+.env.*
+!.env.example
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+*.sqlite3
+*.db
+*.sql
+*.dump
+*.backup
+*.log
+# Editor, artefatos e downloads
+.idea/
+.vscode/
+staticfiles/
+dist/
+build/
+*.exe
+*.zip
+# Controle local do fluxo
+/task.md
+/RELATORIO.md
+/pedidos/
+
+# Local validation evidence and temporary data
+.local/
+.coverage.*
+*.egg-info/
