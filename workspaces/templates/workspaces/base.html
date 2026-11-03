@@ -1,1 +1,38 @@
-{% load static %}<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{% block title %}Visão geral{% endblock %} · Poupa Grana</title><link rel="stylesheet" href="{% static 'workspaces/app.css' %}">{% block head %}{% endblock %}</head><body><a class="skip" href="#content">Pular para conteúdo</a><aside class="sidebar"><a class="brand" href="/">poupa<span>grana.</span></a><p class="eyebrow">SEU ESPAÇO FINANCEIRO</p><form method="post" action="{% url 'switch' %}">{% csrf_token %}<label for="workspace">Espaço atual</label><select id="workspace" name="workspace">{% for item in spaces %}<option value="{{ item.pk }}" {% if item.pk == workspace.pk %}selected{% endif %}>{{ item.get_kind_display }} · {{ item.name }}</option>{% endfor %}</select><button class="secondary">Trocar espaço →</button></form><nav><a href="{% url 'home' %}">▦ Visão geral</a><a href="{% url 'entries' %}">↕ Lançamentos</a><a href="{% url 'cards' %}">▤ Cartões e faturas</a><a href="{% url 'budgets' %}">◎ Orçamentos</a><a href="{% url 'integrations' %}">↗ Integrações</a>{% if is_owner and workspace.kind == 'business' %}<a href="{% url 'team' %}">♧ Minha equipe</a>{% endif %}</nav><div class="side-note"><strong>Um passo de cada vez.</strong><p>Organização hoje.<br>Tranquilidade amanhã.</p></div><form method="post" action="{% url 'logout' %}">{% csrf_token %}<button class="secondary">Sair com segurança</button></form></aside><main id="content" class="main"><header><span>{{ workspace.get_kind_display }} / {% block breadcrumb %}Visão geral{% endblock %}</span><span class="user">{{ request.user.username }} · {% if is_owner %}Proprietário{% else %}Integrante{% endif %}</span></header>{% for message in messages %}<div class="message" role="status">{{ message }}</div>{% endfor %}{% block content %}{% endblock %}<footer>Poupa Grana · Seus números, suas decisões.</footer></main></body></html>
+{% load static %}
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#dce7ec">
+  <title>{% block title %}Visão geral{% endblock %} · Poupa Grana</title>
+  <link rel="stylesheet" href="{% static 'workspaces/app.css' %}">
+  <script defer src="{% static 'workspaces/interface.js' %}"></script>
+  {% block head %}{% endblock %}
+</head>
+<body class="autonomous-ui">
+<a class="skip" href="#content">Pular para conteúdo</a>
+<header class="site-bar">
+  <a class="brand" href="{% url 'home' %}" aria-label="Poupa Grana — início"><span class="brand-slash">/</span>poupa<span>grana</span><i>.</i></a>
+  {% with current=request.resolver_match.url_name %}
+  <nav class="main-nav" aria-label="Navegação principal">
+    <a href="{% url 'home' %}" {% if current == 'home' %}aria-current="page"{% endif %}>Visão geral</a>
+    <a href="{% url 'entries' %}" {% if current == 'entries' or current == 'entry_new' %}aria-current="page"{% endif %}>Lançamentos</a>
+    <a href="{% url 'cards' %}" {% if current == 'cards' %}aria-current="page"{% endif %}>Cartões</a>
+    <a href="{% url 'budgets' %}" {% if current == 'budgets' %}aria-current="page"{% endif %}>Orçamentos</a>
+    <a href="{% url 'integrations' %}" {% if current == 'integrations' %}aria-current="page"{% endif %}>Integrações</a>
+    {% if is_owner and workspace.kind == 'business' %}<a href="{% url 'team' %}" {% if current == 'team' %}aria-current="page"{% endif %}>Equipe</a>{% endif %}
+  </nav>
+  {% endwith %}
+  <form class="logout" method="post" action="{% url 'logout' %}">{% csrf_token %}<button class="account-button" aria-label="Sair com segurança"><span>{{ request.user.username }}</span><span class="circle-arrow" aria-hidden="true">↗</span></button></form>
+</header>
+<main id="content" class="main">
+  <div class="workspace-bar">
+    <div class="workspace-identity"><span class="status-dot" aria-hidden="true"></span><span>{{ workspace.name }}</span><span class="scope-pill">{% if is_owner %}Proprietário{% else %}Meus registros{% endif %}</span></div>
+    <form method="post" action="{% url 'switch' %}" class="workspace-switch">{% csrf_token %}<label for="workspace">Espaço atual</label><select id="workspace" name="workspace" aria-label="Espaço atual">{% for item in spaces %}<option value="{{ item.pk }}" {% if item.pk == workspace.pk %}selected{% endif %}>{{ item.get_kind_display }} · {{ item.name }}</option>{% endfor %}</select><button class="secondary">Trocar espaço →</button></form>
+  </div>
+  {% for message in messages %}<div class="message" role="status">{{ message }}</div>{% endfor %}
+  {% block content %}{% endblock %}
+  <footer><a class="brand footer-brand" href="{% url 'home' %}">/poupa<span>grana.</span></a><span>Mais clareza para decidir. Mais espaço para viver.</span><small>Pessoal e empresa, cada um no seu lugar.</small></footer>
+</main>
+</body>
+</html>
