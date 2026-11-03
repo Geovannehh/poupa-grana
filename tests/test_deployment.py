@@ -142,5 +142,6 @@ def test_static_assets_are_collected_and_served_without_debug(client, tmp_path):
         response = client.get("/static/workspaces/app.css")
         assert response.status_code == 200
         content = b"".join(response.streaming_content)
-        assert b".sidebar" in content
+        assert response["Content-Type"].startswith("text/css")
+        assert b":root" in content
         response.close()

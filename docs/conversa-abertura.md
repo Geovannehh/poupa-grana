@@ -104,3 +104,10 @@ A instalação/conexão GitHub foi confirmada. O repositório público poupa-gra
 PR #1 criado e integrado com merge commit após CI remoto verde, mesmo head verificado e proteção da main ativada. Main exige PR e check lint-e-testes, inclusive para administradores; force push e exclusão bloqueados. Histórico local inicial preservado em branch de arquivo.
 
 Preparação Railway separada: Dockerfile não root, Gunicorn 25.3.0, WhiteNoise 6.12.0, perfil de proxy específico da Railway, healthcheck mínimo, coleta de estáticos no runtime e inicialização do proprietário por variáveis privadas sob lock transacional PostgreSQL. Novos testes elevaram a suíte local para 75 aprovados; imagem será construída no CI Linux. Não foi gerado railway.json/toml porque a documentação vigente o marcou como obsoleto para serviços novos. Railway continua sem instalação/conexão confirmada, sem projeto ou deploy criado.
+
+
+## Interface Autonomous Finances
+
+O proprietário forneceu a referência Awwwards Autonomous Finances e solicitou usar sua interface. Adaptado o Poupa Grana com fundo azul gelo, navegação arredondada, painéis translúcidos, tipografia ampla e escultura orbital em SVG original. Login, dashboard e telas internas compartilham a identidade; formulários, permissões, confirmação do rascunho e API preservados. Movimento reduzido respeitado. Verificação visual em desktop e celular, sem salvar lançamento fictício. Suíte PostgreSQL: 75 testes aprovados, Ruff e sintaxe JavaScript aprovados. Contraste do texto principal e secundário ajustado para leitura sobre o fundo.
+
+Railway conectada, mas a criação do projeto foi recusada por limite do plano gratuito; nenhum serviço dos projetos existentes foi alterado. A entrega visual segue em PR próprio, sob a continuação e decisões delegadas pelo proprietário.
